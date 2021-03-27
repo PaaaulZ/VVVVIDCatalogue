@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>VVVVID Catalogue</title>
+        <style = 'text/css'>
+            table tr 
+            {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+            }
+        </style>
+    </head>
+    <body>
+        <form action = '/search' method = 'GET'>
+            <label for = 'search'>Search: </label>
+            <input type = 'text' id  = 'search' name = 'parameter' />
+            <input type = 'submit' value = 'Search' />
+        </form>
+        <table>
+            <tr>
+                {% for anime in list %}
+                <td id = '{{ anime.id }}'><a href = '{{ anime.url }}'><img src = '{{ anime.thumbnail }}' /><p>{{ anime.name }}</p></a></td>
+                {% endfor %}
+            </tr>
+        </table>
+    </body>
+</html>
