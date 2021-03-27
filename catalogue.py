@@ -8,7 +8,8 @@ from requests.sessions import session
 
 URL_SESSION_ID = "https://www.vvvvid.it/vvvvid/settings"
 URL_CONNECTION_ID = "https://www.vvvvid.it/user/login"
-URL_LIST = "https://www.vvvvid.it/vvvvid/ondemand/anime/channel/10003/last?conn_id=[[[CID]]]&filter=[[[LETTER]]]"
+URL_LIST1 = "https://www.vvvvid.it/vvvvid/ondemand/anime/channel/10003/last?filter=[[[LETTER]]]&conn_id=[[[CID]]]"
+URL_LIST2 = "https://www.vvvvid.it/vvvvid/ondemand/anime/channel/10003?filter=[[[LETTER]]]&conn_id=[[[CID]]]"
 
 anime_list = []
 
@@ -27,11 +28,19 @@ def main():
 
         for i in range(97,122):
             # For every letter of the alphabet
-            json_list = get_list(chr(i), connection_id, session_id)
+            # First list
+            json_list = get_list(chr(i), connection_id, session_id, True)
             if json_list.get('data') is not None:
                 # Check if there is an anime with this letter
                 for anime in json_list['data']:
                     anime_list.append({'name': anime['title'], 'url': f"https://www.vvvvid.it/show/{anime['show_id']}/", 'thumbnail': anime['thumbnail'], 'id': anime['show_id']})
+
+            # Simulate "next" button
+            json_list = get_list(chr(i), connection_id, session_id, False)
+            while not json_list.get('message')  == "":
+                for anime in json_list['data']:
+                    anime_list.append({'name': anime['title'], 'url': f"https://www.vvvvid.it/show/{anime['show_id']}/", 'thumbnail': anime['thumbnail'], 'id': anime['show_id']})
+                json_list = get_list(chr(i), connection_id, session_id, False)
 
     return render_template('catalogue.htm', list=anime_list)
 
@@ -60,9 +69,13 @@ def get_tokens():
     r_json = json.loads(r.content)
     return {'conn_id': r_json['data']['conn_id'], 'session_id': r_json['data']['sessionId']}
 
-def get_list(letter, connection_id, session_id):
+def get_list(letter, connection_id, session_id, first):
 
     # Anime list (starting with that letter)
-    r = requests.get(URL_LIST.replace("[[[CID]]]", connection_id).replace("[[[LETTER]]]", letter), cookies={'vvvvid_cookies_accepted': '1', 'JSESSIONID': session_id}, headers={'User-Agent': 'Mozilla/5.0', 'Referer': 'https://vvvvid.it'})
+    if first:
+        r = requests.get(URL_LIST1.replace("[[[CID]]]", connection_id).replace("[[[LETTER]]]", letter), cookies={'vvvvid_cookies_accepted': '1', 'JSESSIONID': session_id}, headers={'User-Agent': 'Mozilla/5.0', 'Referer': 'https://vvvvid.it'})
+    else:
+        r = requests.get(URL_LIST2.replace("[[[CID]]]", connection_id).replace("[[[LETTER]]]", letter), cookies={'vvvvid_cookies_accepted': '1', 'JSESSIONID': session_id}, headers={'User-Agent': 'Mozilla/5.0', 'Referer': 'https://vvvvid.it'})
+
     return json.loads(r.content)
 
