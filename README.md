@@ -5,7 +5,7 @@ A catalogue for popular italian anime site VVVVID that supports searching and a 
 
 This is just a catalogue! 
 All it does is show every anime available on VVVVID in a single page instead of having to choose letter by letter and supports searching.
-This does not download, store or copy any video or data. When launched it will download the anime list, show the catalogue with link pointing to VVVVID and when you close it everything is gone.
+This does not download, store or copy any video or data. When launched it will load the anime list, show the catalogue with links pointing to VVVVID and when you close it everything is gone.
 
 ## Why?
 
