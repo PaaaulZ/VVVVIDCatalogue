@@ -36,3 +36,8 @@ Windows:
 ```
 
 4) Navigate to: http://127.0.0.1:5000/ and enjoy (wait a minute or two for the list to load)
+
+## Live version:
+
+Click [HERE](https://paaaulz.github.io/VVVVIDCatalogue) for a live version. 
+This version is not always updated and has no search bar, you can still search by using your browser's search function (CTRL + F).
