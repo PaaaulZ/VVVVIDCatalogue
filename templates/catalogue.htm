@@ -5,22 +5,35 @@
             table tr 
             {
                 display: grid;
-                grid-template-columns: repeat(5, 1fr);
+                grid-template-columns: repeat(6, 1fr);
             }
         </style>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/css.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
     </head>
     <body>
+        <br/>
         <form action = '/search' method = 'GET'>
-            <label for = 'search'>Search: </label>
+            <label for = 'search'>Text to search: </label>
             <input type = 'text' id  = 'search' name = 'parameter' />
             <input type = 'submit' value = 'Search' />
         </form>
-        <table>
-            <tr>
-                {% for anime in list %}
-                <td id = '{{ anime.id }}'><a href = '{{ anime.url }}'><img src = '{{ anime.thumbnail }}' /><p>{{ anime.name }}</p></a></td>
-                {% endfor %}
-            </tr>
-        </table>
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-wrap">
+                            <table class="table table-bordered text-center">
+                                <tr>
+                                {% for anime in list %}
+                                    <td id = '{{ anime.id }}' class="text-center"><a href = '{{ anime.url }}'><img src = '{{ anime.thumbnail }}' /><p><br/>{{ anime.name }}</p></a></td>
+                                {% endfor %}
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </body>
 </html>

@@ -4,8 +4,6 @@ from flask import Flask
 from flask import render_template
 from flask import request
 
-from requests.sessions import session
-
 URL_SESSION_ID = "https://www.vvvvid.it/vvvvid/settings"
 URL_CONNECTION_ID = "https://www.vvvvid.it/user/login"
 URL_LIST1 = "https://www.vvvvid.it/vvvvid/ondemand/anime/channel/10003/last?filter=[[[LETTER]]]&conn_id=[[[CID]]]"
